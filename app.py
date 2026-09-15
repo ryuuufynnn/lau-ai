@@ -2,40 +2,93 @@ import config
 import json
 import urllib.request
 import urllib.error
+import textwrap
+import re
 
+curious_penguin = "rene-mamaaa"
 
 def get_question():
-    print("type 'q' to exit loop")
-    question = input("ask me > ")
+    RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET = colors()
 
-    return question
+    return input(f"{YELLOW}> {RESET}")
 
+def clean_answer(answer):
+    # Remove thinking tags
+    answer = re.sub(r"<think>.*?</think>", "", answer, flags=re.DOTALL)
+
+    # Remove extra blank lines
+    answer = re.sub(r"\n\s*\n+", "\n\n", answer)
+
+    # Remove spaces at the beginning/end
+    answer = answer.strip()
+
+    return answer
+
+def format_answer(answer):
+    answer = clean_answer(answer)
+
+    lines = answer.splitlines()
+    formatted = []
+
+    in_code = False
+
+    for line in lines:
+        stripped = line.strip()
+
+        # Keep code blocks untouched
+        if stripped.startswith("```"):
+            in_code = not in_code
+            formatted.append(line)
+            continue
+
+        if in_code:
+            formatted.append(line)
+            continue
+
+        if not stripped:
+            formatted.append("")
+            continue
+
+        # Wrap normal text so it doesn't stretch too far
+        wrapped = textwrap.wrap(
+            stripped,
+            width=76,
+            subsequent_indent="         "
+        )
+
+        formatted.extend(wrapped)
+
+    return "\n".join(formatted).strip()
 
 def ask_ai(question):
-    url = "http://127.0.0.1:8080/v1/completions"
-
-    prompt = f"""You are LAU AI, a simple and concise programming study assistant.
-
-Focus mainly on Python and Data Structures and Algorithms (DSA).
-
-Rules:
-- Give direct answers.
-- Keep basic answers short and easy to understand.
-- Do not show your thinking or reasoning.
-- Do not repeat sentences.
-- If the user asks for code, provide working code.
-- Follow the user's requested programming language.
-- If the user asks for no comments, do not add comments.
-
-User question:
-{question}
-
-LAU AI answer:"""
+    url = "http://127.0.0.1:8080/v1/chat/completions"
 
     data = {
-        "prompt": prompt,
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "You are LAU AI, a simple and concise programming "
+                    "study assistant focused mainly on Python and DSA.\n"
+                    "Answer directly and clearly.\n"
+                    "Do not show your thinking or reasoning.\n"
+                    "Do not repeat sentences.\n"
+                    "Keep simple questions short.\n"
+                    "If the user asks for code, provide working code.\n"
+                    "Follow the user's requested programming language.\n"
+                    "If the user asks for no comments, do not add comments."
+                )
+            },
+            {
+                "role": "user",
+                "content": question
+            }
+        ],
         "temperature": 0.2,
-        "max_tokens": 150
+        "max_tokens": 200,
+        "chat_template_kwargs": {
+            "enable_thinking": False
+        }
     }
 
     request = urllib.request.Request(
@@ -47,30 +100,37 @@ LAU AI answer:"""
 
     try:
         with urllib.request.urlopen(request) as response:
-            result = json.loads(response.read().decode("utf-8"))
+            result = json.loads(
+                response.read().decode("utf-8")
+            )
 
-        return result["choices"][0]["text"].strip()
+        answer = result["choices"][0]["message"]["content"]
 
-    except urllib.error.URLError as error:
-        return f"Could not connect to AI server: {error}"
-    
+        return format_answer(answer)
+
+    except urllib.error.URLError:
+        return "Could not connect to LAU AI server."
+
+    except (KeyError, json.JSONDecodeError):
+        return "Invalid response from LAU AI server."
+
 def save_history(question):
     history = load_history()
-    history.append(
-        {"question": question}
-    )
+
+    history.append({
+        "question": question
+    })
 
     with open(config.HISTORY_FILE, "w") as file:
         json.dump(history, file, indent=4)
-
 
 def load_history():
     try:
         with open(config.HISTORY_FILE, "r") as file:
             return json.load(file)
+
     except (FileNotFoundError, json.JSONDecodeError):
         return []
-
 
 def show_history():
     history = load_history()
@@ -79,16 +139,28 @@ def show_history():
         print("lau-ai > no history yet.")
         return
 
-    print("\nHistory: ")
-
-    number = 1
-
     for item in history:
-        print(f"{number}. {item['question']}")
-        number += 1
+        print(f"> {item['question']}")
 
+def colors():
+    # ANSI escape codes for colors
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    BLUE = "\033[94m"
+    MAGENTA = "\033[95m"
+    CYAN = "\033[96m"
+    RESET = "\033[0m"
+
+    return RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET
 
 def main():
+    RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET = colors()
+
+    print("_____________________________________\n")
+    print(f"{MAGENTA}lau-ai{RESET}")
+    print("_____________________________________\n")
+
     while True:
         question = get_question()
 
@@ -99,12 +171,15 @@ def main():
             show_history()
             continue
 
+        if not question.strip():
+            continue
+
         save_history(question)
 
         answer = ask_ai(question)
 
-        print(f"\nlau-ai > {answer}\n")
-
+        print(f"{BLUE}lau-ai > {CYAN}{answer}{RESET}")
+        print()
 
 if __name__ == "__main__":
     main()
