@@ -1,29 +1,29 @@
 [
     {
-        "question": "cd \"/home/laurence-linux/lau-ai\""
+        "question": "hello"
     },
     {
-        "question": "cd \"/home/laurence-linux/lau-ai\""
+        "question": "hello what is python variable?"
     },
     {
-        "question": "python -u \"/home/laurence-linux/lau-ai/main.py\""
-    },
-    {
-        "question": "python -u \"/home/laurence-linux/lau-ai/main.py\""
+        "question": "make me a full working code of bubble sort in python, no comments"
     },
     {
         "question": "hello"
     },
     {
-        "question": "hello"
+        "question": "what is python, brief answer only"
     },
     {
-        "question": "he"
+        "question": "make me a full python code for bubble sort, no comments"
     },
     {
-        "question": "cd \"/home/laurence-linux/lau-ai\""
+        "question": "who is the president of the Philippines now?"
     },
     {
-        "question": "python -u \"/home/laurence-linux/lau-ai/main.py\""
+        "question": "no that's the former president"
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
     }
 ]
