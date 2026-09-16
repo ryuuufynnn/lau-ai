@@ -7,7 +7,9 @@ import re
 import subprocess
 import time
 import os
+import threading # for loader
 
+from loader import show_loader
 from context import AI_CONTEXT, load_memory, format_memory
 
 curious_penguin = "rene-mamaaa"
@@ -66,6 +68,14 @@ def format_answer(answer):
     return "\n".join(formatted).strip()
 
 def ask_ai(question):
+    # stop_event = threading.Event()
+    # loader_thread = threading.Thread(
+    #     target=show_loader,
+    #     args=(stop_event,)
+    # )
+
+    # loader_thread.start()
+
     url = "http://127.0.0.1:8080/v1/chat/completions"
 
     memory = format_memory()
@@ -96,10 +106,20 @@ def ask_ai(question):
     )
 
     try:
+        stop_event = threading.Event()
+        loader_thread = threading.Thread(
+            target=show_loader,
+            args=(stop_event,)            )
+        
+        loader_thread.start()
+
         with urllib.request.urlopen(request) as response:
             result = json.loads(
                 response.read().decode("utf-8")
             )
+
+        stop_event.set()
+        loader_thread.join()
 
         answer = result["choices"][0]["message"]["content"]
 
