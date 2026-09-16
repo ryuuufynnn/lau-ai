@@ -4,6 +4,11 @@ import urllib.request
 import urllib.error
 import textwrap
 import re
+import subprocess
+import time
+import os
+
+from context import AI_CONTEXT, load_memory, format_memory
 
 curious_penguin = "rene-mamaaa"
 
@@ -63,21 +68,13 @@ def format_answer(answer):
 def ask_ai(question):
     url = "http://127.0.0.1:8080/v1/chat/completions"
 
+    memory = format_memory()
+
     data = {
         "messages": [
             {
                 "role": "system",
-                "content": (
-                    "You are LAU AI, a simple and concise programming "
-                    "study assistant focused mainly on Python and DSA.\n"
-                    "Answer directly and clearly.\n"
-                    "Do not show your thinking or reasoning.\n"
-                    "Do not repeat sentences.\n"
-                    "Keep simple questions short.\n"
-                    "If the user asks for code, provide working code.\n"
-                    "Follow the user's requested programming language.\n"
-                    "If the user asks for no comments, do not add comments."
-                )
+                "content": f"{AI_CONTEXT}\n\nUser memory: \n{memory}"
             },
             {
                 "role": "user",
@@ -154,6 +151,58 @@ def colors():
 
     return RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET
 
+def start_ai_server():
+    RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET = colors()
+
+    url = "http://127.0.0.1:8080/health"
+
+    # Check if server is already running
+    try:
+        urllib.request.urlopen(url, timeout=1)
+        return None
+    except:
+        pass
+
+    print(f"server-status: {MAGENTA}starting{RESET}")
+
+    env = os.environ.copy()
+    env["LD_LIBRARY_PATH"] = "/usr/lib"
+    env.pop("LD_PRELOAD", None)
+
+    # Remove possible library overrides
+    env.pop("LD_LIBRARY_PATH", None)
+    env.pop("LD_PRELOAD", None)
+
+    server = subprocess.Popen(
+        [
+            "/home/laurence-linux/llama.cpp/build/bin/llama-server",
+            "--model",
+            "/home/laurence-linux/llama.cpp/models/Qwen3.5-0.8B-Q4_0.gguf",
+            "--reasoning",
+            "off"
+        ],
+        env=env,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+
+    # Wait until server is ready
+    for _ in range(60):
+        try:
+            urllib.request.urlopen(url, timeout=1)
+            print(f"server-status: {GREEN}ready{RESET}")
+            return server
+        except:
+            if server.poll() is not None:
+                print(f"server-status: {RED}failed{RESET}")
+                return None
+
+            time.sleep(0.5)
+
+    print("Could not connect to LAU AI server.")
+    server.terminate()
+    return None
+
 def main():
     RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET = colors()
 
@@ -182,4 +231,5 @@ def main():
         print()
 
 if __name__ == "__main__":
+    server = start_ai_server()
     main()

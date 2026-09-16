@@ -82,5 +82,248 @@
     },
     {
         "question": "okay that's nice, good job"
+    },
+    {
+        "question": "great how are you?"
+    },
+    {
+        "question": "great how are you?"
+    },
+    {
+        "question": "what is python?"
+    },
+    {
+        "question": "great job"
+    },
+    {
+        "question": "who are you?"
+    },
+    {
+        "question": "oh thanks for introducing yourself"
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "lau"
+    },
+    {
+        "question": "d"
+    },
+    {
+        "question": "fdfd"
+    },
+    {
+        "question": "h"
+    },
+    {
+        "question": "helo"
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
+    },
+    {
+        "question": "hi"
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "hi i am linux"
+    },
+    {
+        "question": "yes how to create a linux txt file via terminal"
+    },
+    {
+        "question": "can i create with touch?"
+    },
+    {
+        "question": "he"
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "cd \"/home/laurence-linux/lau-ai\""
+    },
+    {
+        "question": "python -u \"/home/laurence-linux/lau-ai/app.py\""
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
+    },
+    {
+        "question": "cd \"/home/laurence-linux/lau-ai\""
+    },
+    {
+        "question": "python -u \"/home/laurence-linux/lau-ai/app.py\""
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
+    },
+    {
+        "question": "source /home/laurence-linux/lau-ai/.venv/bin/activate"
+    },
+    {
+        "question": "hek"
+    },
+    {
+        "question": "hello who is linus"
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "he"
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "could you answer offline?"
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "e"
+    },
+    {
+        "question": "e"
+    },
+    {
+        "question": "e"
+    },
+    {
+        "question": "e"
+    },
+    {
+        "question": "helo ai"
+    },
+    {
+        "question": "what are you doing rn?"
+    },
+    {
+        "question": "explain what is temp"
+    },
+    {
+        "question": "could you give me an example source code of an OOP students?"
+    },
+    {
+        "question": "wow thanks"
+    },
+    {
+        "question": "do you store memory?"
+    },
+    {
+        "question": "cheap"
+    },
+    {
+        "question": "is rs progammming language, and if yes who created it?"
+    },
+    {
+        "question": "read carefully what my question is"
+    },
+    {
+        "question": "is rs progammming language, and if yes who created it?"
+    },
+    {
+        "question": "create a python function for a merge sort"
+    },
+    {
+        "question": "hello"
+    },
+    {
+        "question": "what can you do?"
+    },
+    {
+        "question": "can you debug a dsa code?"
+    },
+    {
+        "question": "def merge_sort(arr):"
+    },
+    {
+        "question": "    if len(arr) <= 1:"
+    },
+    {
+        "question": "        return arr"
+    },
+    {
+        "question": "    mid = len(arr) // 2"
+    },
+    {
+        "question": "    left = merge_sort(arr[:mid])"
+    },
+    {
+        "question": "    right = merge_sort(arr[mid:])"
+    },
+    {
+        "question": "    return merge(left, right)"
+    },
+    {
+        "question": "def merge(left, right):"
+    },
+    {
+        "question": "    result = []"
+    },
+    {
+        "question": "    i = j = 0"
+    },
+    {
+        "question": "    while i < len(left) and j < len(right):"
+    },
+    {
+        "question": "        if left[i] < right[j]:"
+    },
+    {
+        "question": "            result.append(left[i])"
+    },
+    {
+        "question": "            i += 1"
+    },
+    {
+        "question": "hello good morning"
+    },
+    {
+        "question": "how to print in python?"
+    },
+    {
+        "question": "how to print in java?"
+    },
+    {
+        "question": "how to declare a bool var in python and java?"
+    },
+    {
+        "question": "thank you"
+    },
+    {
+        "question": "clear"
+    },
+    {
+        "question": "what should you teach me"
+    },
+    {
+        "question": "what you should teach me?"
+    },
+    {
+        "question": "what are the different types of sorting?"
+    },
+    {
+        "question": "h"
+    },
+    {
+        "question": "what should you teach me?"
     }
 ]

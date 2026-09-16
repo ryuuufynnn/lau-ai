@@ -1,0 +1,17 @@
+{
+    "user": {
+        "learning": [
+            "Python",
+            "Data Structures and Algorithms"
+        ],
+        "level": "beginner"
+    },
+    "assistant": {
+        "name": "LAU AI",
+        "purpose": "offline programming study assistant"
+    },
+    "preferences": {
+        "explanations": "simple and beginner-friendly",
+        "code": "working and direct"
+    }
+}
