@@ -179,7 +179,7 @@ def start_ai_server():
     # Check if server is already running
     try:
         urllib.request.urlopen(url, timeout=1)
-        return None
+        return "ready"
     except:
         pass
 
@@ -211,30 +211,35 @@ def start_ai_server():
         try:
             urllib.request.urlopen(url, timeout=1)
             print(f"server-status: {GREEN}ready{RESET}")
-            return server
+            return "ready"
         except:
             if server.poll() is not None:
                 print(f"server-status: {RED}failed{RESET}")
-                return None
+                return "failed"
 
             time.sleep(0.5)
 
     print("Could not connect to LAU AI server.")
     server.terminate()
-    return None
+    return "failed"
 
 def main():
     RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET = colors()
+    status = start_ai_server()
 
-    print("_____________________________________\n")
-    print(f"{MAGENTA}lau-ai{RESET}")
-    print("_____________________________________\n")
+    print(f"{YELLOW}_____________________________________{RESET}\n")
+    print(f"{MAGENTA}lau-ai{RESET} server-status: {GREEN}{status}{RESET}")
+    print(f"{YELLOW}_____________________________________{RESET}\n")
 
     while True:
         question = get_question()
 
-        if question.lower() == "q":
+        if question.lower() == "/ex":
             break
+
+        if question.strip() == "/c":
+            os.system("clear")
+            continue
 
         if question.strip() == "/h":
             show_history()
