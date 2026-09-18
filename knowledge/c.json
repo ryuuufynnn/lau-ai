@@ -1,0 +1,17 @@
+{
+    "topic": "C",
+    "facts": [
+        {
+            "question": "When was C created?",
+            "answer": "C was developed by Dennis Ritchie at Bell Labs. Development began around 1969, and the language was developed during the early 1970s."
+        },
+        {
+            "question": "Who created C?",
+            "answer": "Dennis Ritchie is credited as the primary creator of the C programming language."
+        },
+        {
+            "question": "Is C a programming language?",
+            "answer": "Yes. C is a general-purpose programming language."
+        }
+    ]
+}

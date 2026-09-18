@@ -1,0 +1,17 @@
+{
+    "topic": "Programming",
+    "facts": [
+        {
+            "question": "What is programming?",
+            "answer": "Programming is the process of writing instructions that a computer can execute to perform tasks or solve problems."
+        },
+        {
+            "question": "What is a programming language?",
+            "answer": "A programming language is a formal language used to write instructions for computers. Examples include Python, C, C++, Java, and JavaScript."
+        },
+        {
+            "question": "What is a program?",
+            "answer": "A program is a set of instructions written in a programming language that tells a computer how to perform a task."
+        }
+    ]
+}

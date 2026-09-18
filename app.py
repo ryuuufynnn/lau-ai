@@ -10,7 +10,7 @@ import os
 import threading # for loader
 
 from loader import show_loader
-from context import AI_CONTEXT, load_memory, format_memory
+from context import AI_CONTEXT, load_memory, format_memory, get_relevant_knowledge
 
 curious_penguin = "rene-mamaaa"
 
@@ -32,31 +32,46 @@ def clean_answer(answer):
     return answer
 
 def format_answer(answer):
+
     answer = clean_answer(answer)
 
+    # Remove Markdown bold
+    answer = re.sub(r"\*\*(.*?)\*\*", r"\1", answer)
+
+    # Remove Markdown inline code
+    answer = re.sub(r"`([^`]*)`", r"\1", answer)
+
     lines = answer.splitlines()
+
     formatted = []
 
     in_code = False
 
     for line in lines:
+
         stripped = line.strip()
 
         # Keep code blocks untouched
         if stripped.startswith("```"):
+
             in_code = not in_code
+
             formatted.append(line)
+
             continue
 
         if in_code:
+
             formatted.append(line)
+
             continue
 
         if not stripped:
+
             formatted.append("")
+
             continue
 
-        # Wrap normal text so it doesn't stretch too far
         wrapped = textwrap.wrap(
             stripped,
             width=76,
@@ -79,12 +94,21 @@ def ask_ai(question):
     url = "http://127.0.0.1:8080/v1/chat/completions"
 
     memory = format_memory()
+    knowledge = get_relevant_knowledge(question)
 
     data = {
         "messages": [
             {
                 "role": "system",
-                "content": f"{AI_CONTEXT}\n\nUser memory: \n{memory}"
+                "content": f"""
+                {AI_CONTEXT}
+
+                User memory:
+                {memory}
+
+                Relevant knowledge:
+                {knowledge}
+                """
             },
             {
                 "role": "user",

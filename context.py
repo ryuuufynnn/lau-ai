@@ -33,6 +33,130 @@ def format_memory():
         f"- Code: {code}"
     )
 
+def load_knowledge():
+    knowledge_dir = Path(__file__).parent / "knowledge"
+
+    knowledge = []
+
+    for file in knowledge_dir.glob("*.json"):
+        try:
+            with open(file, "r") as f:
+                knowledge.append(f.read())
+        except OSError:
+            continue
+
+    return "\n\n".join(knowledge)
+
+def load_lessons():
+    lessons_dir = Path(__file__).parent / "knowledge" / "lessons"
+
+    lessons = []
+
+    for file in lessons_dir.glob("*.md"):
+        try:
+            with open(file, "r") as f:
+                lessons.append(f.read())
+        except OSError:
+            continue
+
+    return "\n\n".join(lessons)
+
+def find_knowledge(question):
+    knowledge = load_knowledge()
+
+    keywords = question.lower().split()
+
+    matches = []
+
+    for line in knowledge.splitlines():
+        line_lower = line.lower()
+
+        for keyword in keywords:
+            if len(keyword) > 2 and keyword in line_lower:
+                matches.append(line)
+                break
+
+    return "\n".join(matches[:10])
+
+def detect_topic(question):
+    question = question.lower()
+
+    topics = {
+        "python": [
+            "python",
+            "list",
+            "tuple",
+            "dictionary",
+            "dict",
+            "function",
+            "loop",
+            "while",
+            "for loop",
+            "pathlib"
+        ],
+        "java": [
+            "java",
+            "jvm",
+            "class",
+            "object",
+            "inheritance",
+            "interface",
+            "generics"
+        ],
+        "c": [
+            " c ",
+            "c language",
+            "c programming",
+            "pointer",
+            "malloc",
+            "printf",
+            "scanf"
+        ],
+        "dsa": [
+            "dsa",
+            "data structure",
+            "algorithm",
+            "array",
+            "stack",
+            "queue",
+            "linked list",
+            "bubble sort",
+            "binary search"
+        ],
+        "programming": [
+            "programming",
+            "program",
+            "programming language",
+            "compiler",
+            "code"
+        ]
+    }
+
+    for topic, keywords in topics.items():
+        for keyword in keywords:
+            if keyword in question:
+                return topic
+
+    return None
+
+def load_topic_knowledge(topic):
+    knowledge_dir = Path(__file__).parent / "knowledge"
+    knowledge_file = knowledge_dir / f"{topic}.json"
+
+    try:
+        with open(knowledge_file, "r") as file:
+            return file.read()
+    except OSError:
+        return ""
+
+def get_relevant_knowledge(question):
+    topic = detect_topic(question)
+
+    if not topic:
+        return ""
+
+    return load_topic_knowledge(topic)
+
 AI_CONTEXT = """
 You are LAU AI, a local offline programming study assistant.
 

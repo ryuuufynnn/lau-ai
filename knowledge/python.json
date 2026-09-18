@@ -1,0 +1,17 @@
+{
+    "topic": "Python",
+    "facts": [
+        {
+            "question": "Is Python a programming language?",
+            "answer": "Yes. Python is a high-level, general-purpose programming language."
+        },
+        {
+            "question": "What is Python used for?",
+            "answer": "Python is used for web development, automation, scripting, data analysis, scientific computing, artificial intelligence, education, and many other tasks."
+        },
+        {
+            "question": "What file extension is commonly used for Python source files?",
+            "answer": "Python source files commonly use the .py file extension."
+        }
+    ]
+}

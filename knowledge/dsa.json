@@ -1,0 +1,25 @@
+{
+    "topic": "Data Structures and Algorithms",
+    "facts": [
+        {
+            "question": "What is DSA?",
+            "answer": "DSA stands for Data Structures and Algorithms. Data structures organize data, while algorithms are step-by-step procedures for solving problems."
+        },
+        {
+            "question": "What is a stack?",
+            "answer": "A stack is a linear data structure that follows LIFO: Last In, First Out."
+        },
+        {
+            "question": "What is a queue?",
+            "answer": "A queue is a linear data structure that generally follows FIFO: First In, First Out."
+        },
+        {
+            "question": "What is bubble sort?",
+            "answer": "Bubble sort repeatedly compares adjacent elements and swaps them when they are in the wrong order. Its typical time complexity is O(n^2)."
+        },
+        {
+            "question": "What is binary search?",
+            "answer": "Binary search repeatedly divides a sorted search range in half to find a target. Its typical time complexity is O(log n)."
+        }
+    ]
+}

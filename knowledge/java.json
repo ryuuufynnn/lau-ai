@@ -1,0 +1,29 @@
+{
+    "topic": "Java",
+    "facts": [
+        {
+            "question": "Is Java a programming language?",
+            "answer": "Yes. Java is a high-level, general-purpose programming language."
+        },
+        {
+            "question": "Who created Java?",
+            "answer": "Java was developed at Sun Microsystems, with James Gosling commonly credited as the father of Java."
+        },
+        {
+            "question": "Does Java support inheritance?",
+            "answer": "Yes. Java supports class inheritance using extends and interface inheritance using interfaces."
+        },
+        {
+            "question": "Does Java have generics?",
+            "answer": "Yes. Java supports generics for compile-time type checking of parameterized types."
+        },
+        {
+            "question": "Is Java strongly typed?",
+            "answer": "Yes. Java is statically and strongly typed."
+        },
+        {
+            "question": "Is Java underrated?",
+            "answer": "Whether Java is underrated is an opinion, not a technical fact. Java is widely used in enterprise software, backend systems, and many large software systems."
+        }
+    ]
+}
